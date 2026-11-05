@@ -28,18 +28,19 @@ lands in the log and the job stays green. Set `fail-on-slop: "true"` to block.
 Inputs: `path` (scan target when no pull request base is available),
 `fail-on-slop`, `verbose`.
 
-## PyPI
+## Python package
+
+Build from source until the first PyPI upload:
 
 ```bash
-pipx run grai-gate README.md
+git clone https://github.com/adrianpeticila/grai-gate-action
+cd grai-gate-action
+python -m pip install .
+grai-gate --help
 ```
 
-or
-
-```bash
-pip install grai-gate
-grai-gate docs/
-```
+The PyPI name `grai-gate` is reserved for the first upload. After that,
+`pipx run grai-gate README.md` works.
 
 Exit codes: 0 clean, 1 slop, 2 input error. The CLI accepts `-h` and `--help`.
 

@@ -1,5 +1,9 @@
 # grai-gate
 
+[![Marketplace](https://img.shields.io/badge/marketplace-grai--gate-6f42c1)](https://github.com/marketplace/actions/grai-gate)
+[![PyPI](https://img.shields.io/pypi/v/grai-gate)](https://pypi.org/project/grai-gate/)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://github.com/adrianpeticila/grai-gate-action)
+
 Deterministic anti-slop gate for markdown written by coding agents. One Python
 engine, no model calls, no network. It scores sentence burstiness and flags the
 structural habits that survive spellcheck.
@@ -16,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: adrianpeticila/grai-gate-action@v0.1.4
+      - uses: adrianpeticila/grai-gate-action@v0.1.5
         with:
           fail-on-slop: "false"
 ```
@@ -48,7 +52,7 @@ Exit codes: 0 clean, 1 slop, 2 input error. The CLI accepts `-h` and `--help`.
 ```yaml
 repos:
   - repo: https://github.com/adrianpeticila/grai-gate-action
-    rev: v0.1.4
+    rev: v0.1.5
     hooks:
       - id: grai-gate
 ```

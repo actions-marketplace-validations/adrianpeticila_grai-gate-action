@@ -30,25 +30,56 @@ else
   done < <(find "$target" -type f \( -name '*.md' -o -name '*.mdx' -o -name '*.txt' \) -not -path '*/.git/*' -not -path '*/node_modules/*' -print0)
 fi
 
+write_summary() {
+  [ -n "${GITHUB_STEP_SUMMARY:-}" ] || return 0
+  printf '%s\n' "$1" >> "$GITHUB_STEP_SUMMARY"
+}
+
 if [ "${#files[@]}" -eq 0 ]; then
   echo "grai-gate: no markdown files to score."
+  write_summary "## grai-gate"
+  write_summary ""
+  write_summary "No markdown files to score."
   exit 0
 fi
 
+output="$(mktemp)"
+trap 'rm -f "$output"' EXIT
+
 status=0
 if [ -n "$verbose" ]; then
-  grai-gate "$verbose" "${files[@]}" || status=$?
+  grai-gate "$verbose" "${files[@]}" >"$output" 2>&1 || status=$?
 else
-  grai-gate "${files[@]}" || status=$?
+  grai-gate "${files[@]}" >"$output" 2>&1 || status=$?
+fi
+
+cat "$output"
+
+if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+  {
+    echo "## grai-gate"
+    echo ""
+    if [ -s "$output" ]; then
+      echo '```'
+      cat "$output"
+      echo '```'
+    else
+      echo "No slop found in ${#files[@]} file(s)."
+    fi
+  } >> "$GITHUB_STEP_SUMMARY"
 fi
 
 if [ "$status" -eq 2 ]; then
   echo "grai-gate: input error."
+  write_summary ""
+  write_summary "Input error. Check the action log."
   exit 2
 fi
 
 if [ "${GRAI_FAIL:-false}" = "true" ] && [ "$status" -eq 1 ]; then
   echo "grai-gate: slop found and fail-on-slop is on."
+  write_summary ""
+  write_summary "Slop found and fail-on-slop is on."
   exit 1
 fi
 

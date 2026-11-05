@@ -1,0 +1,39 @@
+name: grai-gate
+description: Deterministic anti-slop check for markdown in a pull request.
+author: grai
+branding:
+  icon: type
+  color: orange
+
+inputs:
+  path:
+    description: Directory to scan when no pull request base is available.
+    required: false
+    default: "."
+  fail-on-slop:
+    description: Fail the job when a file scores below the pass mark.
+    required: false
+    default: "false"
+  verbose:
+    description: Print a line for clean files too.
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+    - name: Install engine
+      shell: bash
+      run: python -m pip install --disable-pip-version-check "$GITHUB_ACTION_PATH"
+    - name: Run grai-gate
+      shell: bash
+      env:
+        GRAI_UTM_SOURCE: github-action
+        GRAI_PATH: ${{ inputs.path }}
+        GRAI_FAIL: ${{ inputs.fail-on-slop }}
+        GRAI_VERBOSE: ${{ inputs.verbose }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/entrypoint.sh"

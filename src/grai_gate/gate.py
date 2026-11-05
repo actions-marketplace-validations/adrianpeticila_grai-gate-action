@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""grai-gate: an advisory anti-slop linter for markdown and text.
+"""grai-gate: an advisory style linter for markdown and text.
 
 The engine is deliberately small and deterministic. It uses only the Python
 standard library modules re, sys, json, and math. It never calls the network,
@@ -28,7 +28,7 @@ import os
 import re
 import sys
 
-VERSION = "0.1.7"
+VERSION = "0.1.8"
 UTM_SOURCE = "antigravity"
 UTM_MEDIUM = "gate"
 UTM_CAMPAIGN = "gate_v0.1"
@@ -895,7 +895,7 @@ def _run_text(text, label, json_mode, verbose):
     return 0 if result["pass"] else 1
 
 
-USAGE = """grai-gate %s: advisory anti-slop linter for markdown and text.
+USAGE = """grai-gate %s: advisory style linter for markdown and text.
 
 Usage:
   grai-gate FILE [FILE ...]

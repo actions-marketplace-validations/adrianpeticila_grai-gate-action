@@ -40,6 +40,7 @@ def main():
     assert proc.returncode == 0, proc.stderr
     assert "Usage:" in proc.stdout
     assert "grai-gate FILE" in proc.stdout
+    assert "anti-slop" not in proc.stdout
 
     with tempfile.TemporaryDirectory() as directory:
         slop = Path(directory) / "slop.md"

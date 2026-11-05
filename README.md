@@ -11,7 +11,7 @@ authorship detector.
 
 On the v2 corpus (58 human-edited docs, 63 model-generated docs), the gate
 flagged 7 of 63 model docs and 3 of 58 human docs. It catches visible patterns,
-not provenance.
+not provenance. Full report: [VALIDATION.md](./VALIDATION.md).
 
 ## GitHub Action
 

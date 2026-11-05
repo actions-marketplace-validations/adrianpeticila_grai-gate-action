@@ -18,19 +18,20 @@ CLEAN = (
 )
 
 
-def run(args, stdin_text=None):
-    env = os.environ.copy()
-    env.pop("GRAI_UTM_SOURCE", None)
-    env.pop("GITHUB_ACTIONS", None)
-    env.pop("PRE_COMMIT", None)
-    env["PYTHONPATH"] = str(ROOT / "src")
+def run(args, stdin_text=None, env=None):
+    child = os.environ.copy()
+    for key in ("GRAI_UTM_SOURCE", "GITHUB_ACTIONS", "PRE_COMMIT"):
+        child.pop(key, None)
+    if env:
+        child.update(env)
+    child["PYTHONPATH"] = str(ROOT / "src")
     return subprocess.run(
         [sys.executable, "-m", "grai_gate.cli"] + list(args),
         input=stdin_text,
         capture_output=True,
         text=True,
         cwd=str(ROOT),
-        env=env,
+        env=child,
     )
 
 
@@ -38,13 +39,27 @@ def main():
     proc = run(["--help"])
     assert proc.returncode == 0, proc.stderr
     assert "Usage:" in proc.stdout
+    assert "grai-gate FILE" in proc.stdout
 
     with tempfile.TemporaryDirectory() as directory:
         slop = Path(directory) / "slop.md"
         slop.write_text(SLOP, encoding="utf-8")
+
         proc = run([str(slop)])
         assert proc.returncode == 1, proc.stdout + proc.stderr
         assert "Slop Score" in proc.stdout
+        assert "utm_source=pypi" in proc.stdout
+
+        proc = run([str(slop)], env={"PRE_COMMIT": "1"})
+        assert proc.returncode == 1, proc.stdout + proc.stderr
+        assert "utm_source=precommit" in proc.stdout
+
+        proc = run([str(slop)], env={"GITHUB_ACTIONS": "true"})
+        assert proc.returncode == 1, proc.stdout + proc.stderr
+        assert "utm_source=github-action" in proc.stdout
+
+        proc = run([str(slop)], env={"GRAI_UTM_SOURCE": "cli", "GITHUB_ACTIONS": "true"})
+        assert proc.returncode == 1, proc.stdout + proc.stderr
         assert "utm_source=cli" in proc.stdout
 
         clean = Path(directory) / "clean.md"

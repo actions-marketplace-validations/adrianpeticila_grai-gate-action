@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: adrianpeticila/grai-gate-action@v0.1.3
+      - uses: adrianpeticila/grai-gate-action@v0.1.4
         with:
           fail-on-slop: "false"
 ```
@@ -30,17 +30,16 @@ Inputs: `path` (scan target when no pull request base is available),
 
 ## Python package
 
-Build from source until the first PyPI upload:
-
 ```bash
-git clone https://github.com/adrianpeticila/grai-gate-action
-cd grai-gate-action
-python -m pip install .
-grai-gate --help
+pipx run grai-gate README.md
 ```
 
-The PyPI name `grai-gate` is reserved for the first upload. After that,
-`pipx run grai-gate README.md` works.
+or
+
+```bash
+pip install grai-gate
+grai-gate docs/
+```
 
 Exit codes: 0 clean, 1 slop, 2 input error. The CLI accepts `-h` and `--help`.
 
@@ -49,7 +48,7 @@ Exit codes: 0 clean, 1 slop, 2 input error. The CLI accepts `-h` and `--help`.
 ```yaml
 repos:
   - repo: https://github.com/adrianpeticila/grai-gate-action
-    rev: v0.1.3
+    rev: v0.1.4
     hooks:
       - id: grai-gate
 ```
@@ -66,4 +65,5 @@ copies match; it exits 1 on drift.
 ## UTM attribution
 
 The report card links to the Pro Cockpit. Attribution resolves from
-`GRAI_UTM_SOURCE`, then `GITHUB_ACTIONS`, then `PRE_COMMIT`, then `cli`.
+`GRAI_UTM_SOURCE`, then `GITHUB_ACTIONS`, then `PRE_COMMIT`. The installed PyPI
+command defaults to `pypi`; a direct engine run defaults to `cli`.

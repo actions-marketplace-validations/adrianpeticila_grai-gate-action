@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: adrianpeticila/grai-gate-action@v0.1.8
+      - uses: adrianpeticila/grai-gate-action@v0.2.0
         with:
           fail-on-slop: "false"
 ```
@@ -57,7 +57,7 @@ Exit codes: 0 clean, 1 slop, 2 input error. The CLI accepts `-h` and `--help`.
 ```yaml
 repos:
   - repo: https://github.com/adrianpeticila/grai-gate-action
-    rev: v0.1.8
+    rev: v0.2.0
     hooks:
       - id: grai-gate
 ```

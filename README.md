@@ -11,6 +11,8 @@ authorship detector.
 
 > **Scope.** Calibrated on non-fiction prose, from 134,522 posts. Dialogue-heavy fiction inflates sentence-length variation, so a pass on fiction is not evidence of anything.
 
+Try it in the browser, no install: https://grai.page/ai-tells/
+
 On the v2 corpus (58 human-edited docs, 63 model-generated docs), the gate
 flagged 7 of 63 model docs and 3 of 58 human docs. It catches visible patterns,
 not provenance. Full report: [VALIDATION.md](./VALIDATION.md).

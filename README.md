@@ -15,6 +15,8 @@ Try it in the browser, no install: https://grai.page/ai-tells/
 
 Public proof registry: https://grai.page/proof
 
+Full workbench & MIT skill source: https://grai.page/ and https://github.com/adrianpeticila/grai
+
 On the v2 corpus (58 human-edited docs, 63 model-generated docs), the gate
 flagged 7 of 63 model docs and 3 of 58 human docs. It catches visible patterns,
 not provenance. Full report: [VALIDATION.md](./VALIDATION.md).
@@ -82,3 +84,14 @@ copies match; it exits 1 on drift.
 The report card links to the Pro Cockpit. Attribution resolves from
 `GRAI_UTM_SOURCE`, then `GITHUB_ACTIONS`, then `PRE_COMMIT`. The installed PyPI
 command defaults to `pypi`; a direct engine run defaults to `cli`.
+
+## Live `grai.page` Tiers & Partner Program
+
+`grai-gate` is the free CLI, pre-commit hook, and GitHub Action for repositories. For executive Voice DNA calibration, browser scoring, and client verification cards, see [grai.page](https://grai.page/):
+
+- **Starter Audit Pass ($19 once):** Unlocks multi-rule repair prompts and ES256 signed verification cards. Promo code `STARTER19` credits $19 toward Solo or Agency within 14 days.
+- **Solo Offline Edition ($79/yr):** Local HTML5 Voice DNA workbench, 8-rule Cadence Gate, and 1-click `.grai` backup.
+- **Agency Verification Protocol ($99/mo or $790/yr):** Up to 10 client profiles, A4 SHA-256 dossiers, and public [grai.page/proof](https://grai.page/proof) / `/verify/:hash` registry seals.
+- **Partner Program (40% recurring/one-time):** Automated `?ref=<handle>` tracking across all Stripe tiers at [grai.page/affiliate](https://grai.page/affiliate).
+
+Upstream engine & MIT instruction harness: [github.com/adrianpeticila/grai](https://github.com/adrianpeticila/grai).
